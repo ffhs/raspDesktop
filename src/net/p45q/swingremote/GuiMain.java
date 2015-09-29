@@ -26,6 +26,8 @@ import javax.swing.SwingUtilities;
 
 public class GuiMain extends JFrame implements KeyListener{
 	private static GuiMain instance = new GuiMain();
+	int lastkey;
+	String lastText;
 	/*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -315,6 +317,7 @@ public class GuiMain extends JFrame implements KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
+		//myKeyEvt(e, "keyTyped");
 		
 	}
 	@Override
@@ -325,40 +328,42 @@ public class GuiMain extends JFrame implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		//myKeyEvt(e, "keyTyped");
+		myKeyEvt(e, "keyTyped");
 	}
 
 	private void myKeyEvt(KeyEvent e, String text) {
         int key = e.getKeyCode();
-
+        if(key == lastkey && text.equals(lastText)) return;
+        lastkey = key;
+        lastText = text;
         if (key == KeyEvent.VK_KP_LEFT || key == KeyEvent.VK_LEFT)
         {
             System.out.println(text + " LEFT");
-            if(text.equals("keyPressed")) new SendStartAction(2);
-            if(text.equals("keyReleased")) new SendStartAction(2);
+            if(text.equals("keyTyped")) new SendStartAction(2);
+            if(text.equals("keyReleased")) new SendStopAction(2);
             //Call some function
         }
         else if (key == KeyEvent.VK_KP_RIGHT || key == KeyEvent.VK_RIGHT)
         {
             System.out.println(text + " RIGHT");
             //Call some function
-            if(text.equals("keyPressed")) new SendStartAction(3);
-            if(text.equals("keyReleased")) new SendStartAction(3);
+            if(text.equals("keyTyped")) new SendStartAction(3);
+            if(text.equals("keyReleased")) new SendStopAction(3);
             
         }
         else if (key == KeyEvent.VK_KP_UP || key == KeyEvent.VK_UP)
         {
             System.out.println(text + " UP");
             //Call some function
-            if(text.equals("keyPressed")) new SendStartAction(0);
-            if(text.equals("keyReleased")) new SendStartAction(0);
+            if(text.equals("keyTyped")) new SendStartAction(0);
+            if(text.equals("keyReleased")) new SendStopAction(0);
         }
         else if (key == KeyEvent.VK_KP_DOWN || key == KeyEvent.VK_DOWN)
         {
             System.out.println(text + " DOWN");
             //Call some function
-            if(text.equals("keyPressed")) new SendStartAction(1);
-            if(text.equals("keyReleased")) new SendStartAction(1);
+            if(text.equals("keyTyped")) new SendStartAction(1);
+            if(text.equals("keyReleased")) new SendStopAction(1);
         }
      }
    
